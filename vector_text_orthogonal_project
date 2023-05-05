@@ -1,0 +1,26 @@
+import numpy as np
+
+file_obj = open('vector_count.txt', 'r')
+data_vector = list(file_obj.readlines())
+
+
+n = int(len(data_vector)/2)
+for i in range(n*2):
+    data_vector[i]=data_vector[i].replace('\n','').replace(' ','')
+list_1 = [float(data_vector[i]) for i in range(n)]
+list_2 = [float(data_vector[i + n ]) for i in range(n)]
+
+t = np.array(list_1)
+r = np.array(list_2)
+
+def orthogonal_projection(a, b):
+    # vector parallel to b of a
+    a_onto_b = b * np.dot(a, b) / np.dot(b, b)
+    # vector perpendicular to c of a
+    a_perp_c = a - a_onto_b
+    return a_onto_b, a_perp_c
+beta=np.dot(r.T,t)/np.dot(r.T,r)
+print('gia tri beta la:', beta)
+print(orthogonal_projection(t, r))
+
+
